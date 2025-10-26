@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnnexmoy3c3x7"]
+
+[ext_resource type="Script" uid="uid://qq2c8ktumbkh" path="res://TimeDisplay.gd" id="1_373cy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fdi2v"]
+font_size = 150
+font_color = Color(1, 0.965168, 0.958099, 0.960784)
+outline_size = 29
+outline_color = Color(0.00566115, 0.00566115, 0.00566115, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_373cy")
+
+[node name="Background" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TimeLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.482407
+anchor_top = 0.204167
+anchor_right = 0.482407
+anchor_bottom = 0.204167
+offset_left = -131.0
+offset_top = 126.0
+offset_right = 154.0
+offset_bottom = 331.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_fdi2v")
+horizontal_alignment = 1
+vertical_alignment = 1

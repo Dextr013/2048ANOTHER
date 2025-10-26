@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=3 uid="uid://c43g7ppa8kwh4"]
+
+[ext_resource type="Script" uid="uid://bkgkg8ujjeo0m" path="res://GameOverPanel.gd" id="1_2vc3d"]
+
+[node name="GameOverPanel_tscn" type="Panel"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_2vc3d")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = -392.0
+offset_top = -616.0
+offset_right = 402.0
+offset_bottom = 547.0
+theme_override_constants/separation = 40
+
+[node name="TitleLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.746585, 2.00946e-06, 8.66354e-07, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 14
+theme_override_font_sizes/font_size = 64
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="WatchAdButton" type="Button" parent="VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.980392, 0.27451, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 30
+text = "Watch ad"
+
+[node name="AdDescription" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+
+[node name="MenuButton" type="Button" parent="VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.980392, 0.27451, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 30
+text = "Menu"
+
+[node name="RestartButton" type="Button" parent="VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.980392, 0.27451, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 30
+text = "Restart"
+
+[node name="SettingsButton" type="Button" parent="VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.980392, 0.27451, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 30
+text = "Settings"

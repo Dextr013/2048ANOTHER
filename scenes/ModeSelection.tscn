@@ -1,0 +1,119 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2ku1dk565cj1"]
+
+[ext_resource type="Script" uid="uid://bpx20tgjurs0v" path="res://scripts/ModeSelection.gd" id="1_2j3k8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_00mc6"]
+font_size = 120
+font_color = Color(1, 1, 0.0941176, 1)
+outline_size = 20
+outline_color = Color(0.00453645, 0.00453645, 0.00453645, 1)
+shadow_size = 24
+shadow_color = Color(0.819608, 0.0823529, 0.584314, 1)
+
+[node name="ModeSelection" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2j3k8")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 5
+stretch_mode = 6
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -350.0
+offset_right = 400.0
+offset_bottom = 350.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.980392, 0.27451, 1)
+theme_override_colors/font_shadow_color = Color(0.709804, 0.129412, 0.509804, 1)
+theme_override_constants/shadow_offset_x = 7
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 7
+text = "Mode selection"
+label_settings = SubResource("LabelSettings_00mc6")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBox"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ModesList" type="VBoxContainer" parent="VBox/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ClassicButton" type="Button" parent="VBox/ScrollContainer/ModesList"]
+custom_minimum_size = Vector2(400, 80)
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0.81532, 0.118329, 0.632473, 1)
+theme_override_constants/outline_size = 23
+theme_override_font_sizes/font_size = 80
+text = "CLASSIC"
+
+[node name="TimeAttackButton" type="Button" parent="VBox/ScrollContainer/ModesList"]
+custom_minimum_size = Vector2(400, 80)
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0.81532, 0.118329, 0.632473, 1)
+theme_override_constants/outline_size = 23
+theme_override_font_sizes/font_size = 80
+text = "TIME ATTACK"
+
+[node name="SurvivalButton" type="Button" parent="VBox/ScrollContainer/ModesList"]
+custom_minimum_size = Vector2(400, 80)
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0.81532, 0.118329, 0.632473, 1)
+theme_override_constants/outline_size = 23
+theme_override_font_sizes/font_size = 80
+text = "SURVIVAL"
+
+[node name="HSeparator2" type="HSeparator" parent="VBox"]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="VBox"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0.81532, 0.118329, 0.632473, 1)
+theme_override_constants/outline_size = 23
+theme_override_font_sizes/font_size = 80
+text = "Back"
+
+[node name="CopyrightLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -30.0
+offset_right = 150.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 30
+text = "© 2025
+ 13.ink - Все права защищены"
+horizontal_alignment = 1

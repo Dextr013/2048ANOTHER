@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<title>2048</title>
+	
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		
+		html, body {
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			background-color: #000;
+			touch-action: none;
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			user-select: none;
+		}
+		
+		#canvas {
+			display: block;
+			width: 100%;
+			height: 100%;
+			image-rendering: -webkit-optimize-contrast;
+			image-rendering: pixelated;
+		}
+		
+		#loading {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			color: #fff;
+			font-family: Arial, sans-serif;
+			font-size: 24px;
+			text-align: center;
+		}
+		
+		.spinner {
+			border: 4px solid rgba(255, 255, 255, 0.3);
+			border-top: 4px solid #fff;
+			border-radius: 50%;
+			width: 40px;
+			height: 40px;
+			animation: spin 1s linear infinite;
+			margin: 20px auto;
+		}
+		
+		@keyframes spin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+	</style>
+</head>
+<body>
+	<div id="loading">
+		<div class="spinner"></div>
+		<div>Loading...</div>
+	</div>
+	<canvas id="canvas"></canvas>
+	
+	<!-- Yandex Games SDK -->
+	<script src="https://yandex.ru/games/sdk/v2"></script>
+	
+	<!-- Godot Engine -->
+	<script>
+		// Конфигурация Godot
+		var engine = null;
+		var ysdk = null;
+		
+		// Инициализация Yandex SDK
+		async function initYandexSDK() {
+			try {
+				console.log('Initializing Yandex SDK...');
+				ysdk = await YaGames.init();
+				console.log('Yandex SDK initialized successfully');
+				window._godot_ysdk = ysdk;
+				
+				// Загружаем игру после инициализации SDK
+				initGame();
+			} catch (error) {
+				console.error('Failed to initialize Yandex SDK:', error);
+				// Загружаем игру даже если SDK не инициализирован
+				initGame();
+			}
+		}
+		
+		// Инициализация игры
+		function initGame() {
+			console.log('Initializing Godot game...');
+			
+			var GODOT_CONFIG = {
+				"args": [],
+				"canvasResizePolicy": 2,
+				"executable": "index",
+				"experimentalVK": false,
+				"focusCanvas": true,
+				"gdextensionLibs": []
+			};
+			
+			var INDETERMINATE_STATUS_STEP_MS = 100;
+			var statusProgress = document.getElementById('status-progress');
+			var statusProgressInner = document.getElementById('status-progress-inner');
+			var statusIndeterminate = document.getElementById('status-indeterminate');
+			var statusNotice = document.getElementById('status-notice');
+			var loading = document.getElementById('loading');
+			
+			var initializing = true;
+			var statusMode = 'hidden';
+			
+			var animationCallbacks = [];
+			function animate(time) {
+				animationCallbacks.forEach(callback => callback(time));
+				requestAnimationFrame(animate);
+			}
+			requestAnimationFrame(animate);
+			
+			function setStatusMode(mode) {
+				if (statusMode === mode || !initializing) {
+					return;
+				}
+				[statusProgress, statusIndeterminate, statusNotice].forEach(elem => {
+					if (elem) elem.style.display = 'none';
+				});
+				animationCallbacks = animationCallbacks.filter(function(value) {
+					return (value != animateStatusIndeterminate);
+				});
+				switch (mode) {
+					case 'progress':
+						if (statusProgress) statusProgress.style.display = 'block';
+						break;
+					case 'indeterminate':
+						if (statusIndeterminate) statusIndeterminate.style.display = 'block';
+						animationCallbacks.push(animateStatusIndeterminate);
+						break;
+					case 'notice':
+						if (statusNotice) statusNotice.style.display = 'block';
+						break;
+					case 'hidden':
+						break;
+					default:
+						throw new Error('Invalid status mode');
+				}
+				statusMode = mode;
+			}
+			
+			function animateStatusIndeterminate(ms) {
+				var i = Math.floor(ms / INDETERMINATE_STATUS_STEP_MS % 8);
+				if (statusIndeterminate.children[i].style.borderTopColor == '') {
+					Array.prototype.slice.call(statusIndeterminate.children).forEach(child => {
+						child.style.borderTopColor = '';
+					});
+					statusIndeterminate.children[i].style.borderTopColor = '#dfdfdf';
+				}
+			}
+			
+			function setStatusNotice(text) {
+				while (statusNotice.lastChild) {
+					statusNotice.removeChild(statusNotice.lastChild);
+				}
+				var lines = text.split('\n');
+				lines.forEach((line) => {
+					statusNotice.appendChild(document.createTextNode(line));
+					statusNotice.appendChild(document.createElement('br'));
+				});
+			}
+			
+			function displayFailureNotice(err) {
+				var msg = err.message || err;
+				console.error(msg);
+				setStatusNotice(msg);
+				setStatusMode('notice');
+				initializing = false;
+			}
+			
+			if (!Engine.isWebGLAvailable()) {
+				displayFailureNotice('WebGL not available');
+			} else {
+				setStatusMode('indeterminate');
+				
+				var engine = new Engine(GODOT_CONFIG);
+				
+				engine.startGame({
+					'onProgress': function (current, total) {
+						if (total > 0) {
+							if (statusProgressInner) {
+								statusProgressInner.style.width = current / total * 100 + '%';
+							}
+							setStatusMode('progress');
+							if (current === total) {
+								setTimeout(() => {
+									setStatusMode('indeterminate');
+								}, 500);
+							}
+						} else {
+							setStatusMode('indeterminate');
+						}
+					},
+				}).then(() => {
+					if (loading) {
+						loading.style.display = 'none';
+					}
+					setStatusMode('hidden');
+					initializing = false;
+					console.log('Game loaded successfully');
+				}, displayFailureNotice);
+			}
+		}
+		
+		// Обработка фокуса страницы для паузы звука
+		document.addEventListener('visibilitychange', function() {
+			if (document.hidden) {
+				console.log('Page hidden - pausing audio');
+			} else {
+				console.log('Page visible - resuming audio');
+			}
+		});
+		
+		// Обработка изменения размера окна
+		window.addEventListener('resize', function() {
+			if (engine && engine.canvas) {
+				engine.canvas.width = window.innerWidth;
+				engine.canvas.height = window.innerHeight;
+			}
+		});
+		
+		// Запускаем инициализацию
+		window.addEventListener('load', function() {
+			initYandexSDK();
+		});
+	</script>
+</body>
+</html>

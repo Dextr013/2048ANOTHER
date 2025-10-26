@@ -1,0 +1,87 @@
+[gd_scene load_steps=4 format=3 uid="uid://btkkj3r8b8e5m"]
+
+[ext_resource type="Script" uid="uid://b4gus4ei2kr1t" path="res://scripts/Leaderboard.gd" id="1_8h2mt"]
+[ext_resource type="Texture2D" uid="uid://ch6w1gntpgvws" path="res://assets/background/settings.png" id="2_cnd66"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bnibd"]
+font_size = 64
+font_color = Color(1, 1, 0.0196078, 1)
+outline_size = 20
+outline_color = Color(0.00960463, 0.00960463, 0.00960463, 1)
+shadow_size = 20
+shadow_color = Color(0.847059, 0, 0.796078, 0.972549)
+
+[node name="Leaderboard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8h2mt")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_cnd66")
+stretch_mode = 6
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -267.0
+offset_top = -318.0
+offset_right = 249.0
+offset_bottom = 223.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="VBox"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_bnibd")
+horizontal_alignment = 1
+
+[node name="StatsContainer" type="VBoxContainer" parent="VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="LeaderboardList" type="VBoxContainer" parent="VBox/ScrollContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="BackButton" type="Button" parent="VBox"]
+layout_mode = 2
+text = "Назад"
+
+[node name="CopyrightLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -153.0
+offset_top = -71.0
+offset_right = 153.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 18
+theme_override_font_sizes/font_size = 24
+text = "© 2025
+ 13.ink - All rights reserved"
+horizontal_alignment = 1
+vertical_alignment = 1

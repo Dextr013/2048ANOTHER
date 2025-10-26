@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=3 uid="uid://qy6tvq2o6urr"]
+
+[ext_resource type="Script" uid="uid://ck8gt8od117mu" path="res://AchievementItem.gd" id="1_5q6of"]
+
+[node name="AchievementItem" type="Panel"]
+custom_minimum_size = Vector2(0, 80)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 400.0
+offset_bottom = 80.0
+script = ExtResource("1_5q6of")
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -20.0
+offset_bottom = -10.0
+alignment = 1
+
+[node name="IconLabel" type="Label" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ContentContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="NameLabel" type="Label" parent="HBoxContainer/ContentContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.980392, 0.980392, 0.27451, 1)
+theme_override_colors/font_shadow_color = Color(0.894118, 0, 0.760784, 1)
+theme_override_font_sizes/font_size = 40
+text = "Achievement Name"
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="DescLabel" type="Label" parent="HBoxContainer/ContentContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_shadow_color = Color(0.809615, 0.0540762, 0.668551, 1)
+theme_override_font_sizes/font_size = 40
+text = "Achievement Description"
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="StatusLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "LOCKED"
+horizontal_alignment = 1
+vertical_alignment = 1
